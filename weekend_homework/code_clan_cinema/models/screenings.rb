@@ -3,24 +3,23 @@ require('pg')
 require('pry')
 
 class Screening
-  attr_reader :id
+  attr_reader :id, :film_id
   attr_accessor :tickets_left
 
   def initialize(options)
 
     @id = options['id'].to_i if options['id']
     @screen_time = options['screen_time']
+    @film_id = options['film_id'].to_i
 
-    # lets say each screening obj is initialised with 100 tickets available,
-    # we will keep reducing this as we generate ticket objects:
-    @tickets_left = 100
+    @tickets_left = 20
   end
 
   def save_to_db
-    sql = "INSERT INTO screenings (screen_time, tickets_left)
-        VALUES ($1, $2)
+    sql = "INSERT INTO screenings (screen_time, film_id, tickets_left)
+        VALUES ($1, $2, $3)
         RETURNING id"
-    values = [@screen_time, @tickets_left]
+    values = [@screen_time, @film_id, @tickets_left]
 
     result = SqlRunner.run(sql, values)
     # binding.pry

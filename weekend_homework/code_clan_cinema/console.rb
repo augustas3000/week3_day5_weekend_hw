@@ -18,163 +18,76 @@ Film.delete_all()
 Customer.delete_all()
 
 # ---------------------------------------------------------------------------
-customer1 = Customer.new(
-  {
-    'name' => 'John',
-    'funds' => 50.00
-  }
-)
-customer1.save_to_db
-
-film1 = Film.new(
-  {
-    'title' => 'Silence of Lambs',
-    'price' => 10.00,
-  }
-)
-film1.save_to_db
-
-film1_screening1 = Screening.new(
-  {
-    'screen_time' => "20:00"
-  }
-)
-film1_screening1.save_to_db
-
-ticket1 = Ticket.new(
-  {
-    'customer_id' => customer1.id,
-    'film_id' => film1.id,
-    'screening_id' => film1_screening1.id
-  }
-)
-ticket1.save_to_db
+# Scenario:
+# 8 customer objects (6 buy one tickets, 2 buy 2 tickets each)
+# 3 film objects
+# 6 screening objects - 17:00 and 20:00 for each film
+# 10 ticket objects
 # ---------------------------------------------------------------------------
-customer9 = Customer.new(
-  {
-    'name' => 'JohnGuy',
-    'funds' => 500.00
-  }
-)
-customer9.save_to_db
+# 1. Initialize customer objects:
+john = Customer.new({'name' => 'John', 'funds' => 30.00})
+john.save_to_db
+maria = Customer.new({'name' => 'Maria', 'funds' => 40.00})
+maria.save_to_db
+joseph = Customer.new({'name' => 'Joseph', 'funds' => 40.00})
+joseph.save_to_db
+carl = Customer.new({'name' => 'Carl', 'funds' => 50.00})
+carl.save_to_db
+dan = Customer.new({'name' => 'Dan', 'funds' => 60.00})
+dan.save_to_db
+gabriel = Customer.new({'name' => 'Gabriel', 'funds' => 50.00})
+gabriel.save_to_db
+lucy = Customer.new({'name' => 'Lucy', 'funds' => 40.00})
+lucy.save_to_db
+mathiew = Customer.new({'name' => 'Mathiew', 'funds' => 40.00})
+mathiew.save_to_db
+# 2. Initialize film objects:
+silence_of_lambs = Film.new({'title' => 'Silence of Lambs', 'price' => 5.00})
+silence_of_lambs.save_to_db
+home_alone = Film.new({'title' => 'Home Alone', 'price' => 4.00})
+home_alone.save_to_db
+rush_hour = Film.new({'title' => 'Rush Hour', 'price' => 7.00})
+rush_hour.save_to_db
+# 3. Initialize screening objects:
+screen_17_00_sol = Screening.new({'screen_time' => "17:00", 'film_id' => silence_of_lambs.id})
+screen_17_00_sol.save_to_db
+screen_21_00_sol = Screening.new({'screen_time' => "21:00", 'film_id' => silence_of_lambs.id})
+screen_21_00_sol.save_to_db
+
+screen_17_00_ha = Screening.new({'screen_time' => "17:00", 'film_id' => home_alone.id})
+screen_17_00_ha.save_to_db
+screen_21_00_ha = Screening.new({'screen_time' => "21:00", 'film_id' => home_alone.id})
+screen_21_00_ha.save_to_db
+
+screen_17_00_rh = Screening.new({'screen_time' => "17:00", 'film_id' => rush_hour.id})
+screen_17_00_rh.save_to_db
+screen_21_00_rh = Screening.new({'screen_time' => "21:00", 'film_id' => rush_hour.id})
+screen_21_00_rh.save_to_db
 
 
-ticket9 = Ticket.new(
-  {
-    'customer_id' => customer9.id,
-    'film_id' => film1.id,
-    'screening_id' => film1_screening1.id
-  }
-)
-ticket1.save_to_db
-
-# ---------------------------------------------------------------------------
-#
-# customer2 = Customer.new(
-#   {
-#     'name' => 'Freddie',
-#     'funds' => 80.00
-#   }
-# )
-# customer2.save_to_db
-#
-# film2 = Film.new(
-#   {
-#     'title' => 'Rambo III',
-#     'price' => 12.00,
-#   }
-# )
-# film2.save_to_db
-#
-# film2_screening1 = Screening.new(
-#   {
-#     'screen_time' => "21:00"
-#   }
-# )
-# film2_screening1.save_to_db
-#
-# ticket2 = Ticket.new(
-#   {
-#     'customer_id' => customer2.id,
-#     'film_id' => film2.id,
-#     'screening_id' => film2_screening1.id
-#   }
-# )
-# ticket2.save_to_db
-# # ------------------------------------------------------------------------------
-# # add another screening for rambo and make one customer buy a ticket
-#
-# customer5 = Customer.new(
-#   {
-#     'name' => 'Jacquiline',
-#     'funds' => 30.00
-#   }
-# )
-# customer5.save_to_db
-# #
-# # film2 = Film.new(
-# #   {
-# #     'title' => 'Rambo III',
-# #     'price' => 12.00,
-# #   }
-# # )
-# # film2.save_to_db
-#
-# film2_screening2 = Screening.new(
-#   {
-#     'screen_time' => "24:00"
-#   }
-# )
-# film2_screening2.save_to_db
-#
-# ticket5 = Ticket.new(
-#   {
-#     'customer_id' => customer5.id,
-#     'film_id' => film2.id,
-#     'screening_id' => film2_screening2.id
-#   }
-# )
-# ticket5.save_to_db
-#
-#
-#
-#
-# # # # ---------------------------------------------------------------------------
-#
-# customer3 = Customer.new(
-#   {
-#     'name' => 'Agata',
-#     'funds' => 130.00
-#   }
-# )
-# customer3.save_to_db
-#
-# # Agata will be seeing Rambo 3 which is already generated as var film2 , hence
-# # the same id.
-#
-# ticket3 = Ticket.new(
-#   {
-#     'customer_id' => customer3.id,
-#     'film_id' => film2.id,
-#     'screening_id' => film2_screening1.id
-#   }
-# )
-# ticket3.save_to_db
-# # # # ---------------------------------------------------------------------------
-# # # # customer 3-Agata is also seeing Silence of Lambs:
-# #
-# ticket4 = Ticket.new(
-#   {
-#     'customer_id' => customer3.id,
-#     'film_id' => film1.id,
-#     'screening_id' => film1_screening1.id
-#   }
-# )
-# ticket4.save_to_db
+# 4. Customers buy tickets:
+john.buy_ticket(screen_21_00_sol)
+maria.buy_ticket(screen_17_00_ha)
+joseph.buy_ticket(screen_21_00_sol)
+carl.buy_ticket(screen_17_00_rh)
+carl.buy_ticket(screen_21_00_ha)
+dan.buy_ticket(screen_21_00_ha)
+dan.buy_ticket(screen_17_00_rh)
+gabriel.buy_ticket(screen_17_00_sol)
+lucy.buy_ticket(screen_21_00_sol)
+mathiew.buy_ticket(screen_21_00_ha)
 
 
-#
-#
-#
+p silence_of_lambs.popular_time
+p home_alone.popular_time
+p rush_hour.popular_time
+
+p silence_of_lambs.count_customers
+p home_alone.count_customers
+p rush_hour.count_customers
+
+p dan.films_booked
+p dan.count_tickets
+
 # binding.pry
 # nil

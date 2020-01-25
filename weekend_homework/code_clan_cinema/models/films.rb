@@ -10,7 +10,6 @@ class Film
     @id = options["id"].to_i if options["id"]
     @title = options["title"]
     @price = options["price"].to_f
-    # @show_time = options['screen_time']
   end
 
   def save_to_db
@@ -68,15 +67,16 @@ class Film
     array_of_screen_times = result.map { |row_hash|
       row_hash['screen_time']}
 
-    frequency_hash = array_of_screen_times.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
 
-    highest_frequency_pair = frequency_hash.max_by { |v| frequency_hash[v] }
-    
-    return highest_frequency_pair[0]
-    # binding.pry
-    # nil
+    screentimes_counts = Hash.new(0)
+    for time_str in array_of_screen_times
+      screentimes_counts[time_str] += 1
+    end
+
+    return screentimes_counts.max_by{|k,v| v}[0]
+    # frequency_hash = array_of_screen_times.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    # highest_frequency_pair = frequency_hash.max_by { |v| frequency_hash[v] }
+    # return highest_frequency_pair[0]
   end
-
-
 
 end

@@ -56,13 +56,33 @@ class Customer
     SqlRunner.run(sql, values)
   end
 
-  def pay_for_ticket(film_price)
-    @funds -= film_price
-  end
-
   # Check how many tickets were bought by a customer
   def count_tickets
     return films_booked().length
+  end
+
+  def buy_ticket(screening_obj)
+
+    if screening_obj.tickets_left == 0
+      return "There are no more tickets left for this screening"
+    end
+
+    film_price = Film.find_by_id(screening_obj.film_id).price
+    if @funds > film_price
+      @funds -= film_price
+      update()
+      screening_obj.tickets_left -= 1
+      screening_obj.update
+
+      ticket_obj = Ticket.new({'customer_id' => @id,
+                             'film_id' => screening_obj.film_id,
+                             'screening_id' => screening_obj.id})
+
+      ticket_obj.save_to_db
+
+      return
+    end
+    return "The customer does not have enough funds"
   end
 
 end
